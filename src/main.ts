@@ -11,8 +11,8 @@ const gsiTerrainSource = useGsiTerrainSource(maplibreGl.addProtocol, {
 });
 const map = new Map({
     container: 'app',
-    zoom: 13,
-    center: [138.7, 35.3],
+    zoom: 17,
+    center: [135.104207, 34.866254],
     minZoom: 5,
     maxZoom: 24,
     pitch: 70,

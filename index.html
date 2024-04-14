@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>maplibre-gl-gsi-terrain</title>
+    </head>
+    <body style="margin: 0">
+        <div id="app" style="height: 100vh"></div>
+        <div
+            class="bg-white absolute left-4 top-4 p-2 bg-opacity-60 rounded-sm"
+        >
+            <div class="font-bold bg-opacity-60 rounded-sm">
+                農業用ため池ビューア
+            </div>
+            <div>
+                農林水産省が公開している<a
+                    href="https://www.maff.go.jp/j/nousin/bousai/bousai_saigai/b_tameike/ichiran.html"
+                    class="underline"
+                    >農業用ため池一覧</a
+                >を可視化するものです。
+            </div>
+            <div>
+                本サイトは個人の研究結果を公開するものであり正確性は保証しかねます。
+            </div>
+        </div>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

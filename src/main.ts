@@ -39,6 +39,15 @@ const map = new Map({
                 tiles: ['https://tiles.spatialty.io/tameikev1/{z}/{x}/{y}.pbf'],
                 attribution:
                     '<a href="https://www.maff.go.jp/j/nousin/bousai/bousai_saigai/b_tameike/ichiran.html">農林水産省 - 農業用ため池一覧</a>',
+                maxzoom: 17,
+            },
+            fude: {
+                type: 'vector',
+                tiles: ['https://tiles.spatialty.io/fude/{z}/{x}/{y}.pbf'],
+                minzoom: 10,
+                maxzoom: 14,
+                attribution:
+                    '「筆ポリゴンデータ（2023年度公開）」（農林水産省）を加工して作成',
             },
         },
         layers: [
@@ -68,6 +77,50 @@ const map = new Map({
                     ],
                 },
                 maxzoom: 12,
+            },
+            {
+                id: 'fude',
+                source: 'fude',
+                'source-layer': 'fudefgb',
+                type: 'line',
+                paint: {
+                    'line-color': [
+                        'match',
+                        ['get', 'land_type'],
+                        '100',
+                        'blue',
+                        '200',
+                        'orange',
+                        'green',
+                    ],
+                    'line-width': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        10,
+                        1,
+                        14,
+                        2,
+                    ],
+                },
+            },
+            {
+                id: 'fude-fill',
+                source: 'fude',
+                'source-layer': 'fudefgb',
+                type: 'fill',
+                paint: {
+                    'fill-color': [
+                        'match',
+                        ['get', 'land_type'],
+                        '100',
+                        '#00aaff',
+                        '200',
+                        'orange',
+                        'green',
+                    ],
+                    'fill-opacity': 0.2,
+                },
             },
             {
                 id: 'tameike',
@@ -155,4 +208,11 @@ map.on('mousemove', (e) => {
     } else {
         map.getCanvas().style.cursor = '';
     }
+});
+
+map.on('click', 'fude', (e) => {
+    if (!e.features) {
+        return;
+    }
+    console.log(e.features);
 });

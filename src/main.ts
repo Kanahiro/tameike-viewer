@@ -1,14 +1,6 @@
 import maplibreGl, { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { useGsiTerrainSource } from 'maplibre-gl-gsi-terrain';
-
-const gsiTerrainSource = useGsiTerrainSource(maplibreGl.addProtocol, {
-    tileUrl: 'https://tiles.gsj.jp/tiles/elev/mixed/{z}/{y}/{x}.png',
-    maxzoom: 17,
-    attribution:
-        '<a href="https://gbank.gsj.jp/seamless/elev/">産総研シームレス標高タイル</a>',
-});
 const map = new Map({
     container: 'app',
     zoom: 17,
@@ -33,7 +25,18 @@ const map = new Map({
                 attribution:
                     '<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',
             },
-            terrain: gsiTerrainSource,
+            terrain: {
+                type: 'raster-dem',
+                tiles: [
+                    'https://gbank.gsj.jp/seamless/elev/terrainRGB/mixed/{z}/{y}/{x}.png',
+                ],
+                minzoom: 0,
+                maxzoom: 17,
+                tileSize: 256,
+                encoding: 'mapbox',
+                attribution:
+                    '<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a> | <a href="https://gbank.gsj.jp/seamless/elev/">産総研シームレス標高タイル</a>',
+            },
             tameike: {
                 type: 'vector',
                 tiles: ['https://tiles.spatialty.io/tameikev1/{z}/{x}/{y}.pbf'],
@@ -49,6 +52,14 @@ const map = new Map({
                 attribution:
                     '「筆ポリゴンデータ（2023年度公開）」（農林水産省）を加工して作成',
             },
+        },
+        sky: {
+            'sky-color': '#4B99EC',
+            'sky-horizon-blend': 0.5,
+            'horizon-color': '#EBFDFF',
+            'horizon-fog-blend': 0.5,
+            'fog-color': '#EBFDFF',
+            'fog-ground-blend': 0.5,
         },
         layers: [
             {
@@ -177,6 +188,13 @@ const map = new Map({
         },
     },
 });
+
+map.addControl(new maplibreGl.NavigationControl());
+map.addControl(
+    new maplibreGl.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+    }),
+);
 
 map.on('click', 'tameike', (e) => {
     if (!e.features) {

@@ -11,6 +11,6 @@
     },
     "dependencies": {
         "maplibre-gl": "^4.5.1",
-        "maplibre-gl-gsi-terrain": "^2.0.0"
+        "maplibre-gl-gsi-terrain": "^2.0.1"
     }
 }

@@ -1,7 +1,7 @@
 import maplibreGl, { Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { useGsiTerrainSource } from '../node_modules/maplibre-gl-gsi-terrain/dist/terrain';
+import { useGsiTerrainSource } from 'maplibre-gl-gsi-terrain';
 const gsiTerrainSource = useGsiTerrainSource(maplibreGl.addProtocol, {
 	tileUrl: 'https://tiles.gsj.jp/tiles/elev/mixed/{z}/{y}/{x}.png',
 	maxzoom: 17,
@@ -206,4 +206,8 @@ map.on('click', 'fude', (e) => {
 		return;
 	}
 	console.log(e.features);
+});
+
+map.on('render', () => {
+	console.log(map.painter.style.map.terrain);
 });
